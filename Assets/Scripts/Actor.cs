@@ -55,10 +55,14 @@ public class Actor {
     //  public methods
     // --------------------------------------------------------------------------------
 
-    public void SetToPlayer()
+    public static Actor GetPlayer()
     {
-        faction = Faction.Player;
-        weapon = Weapon.GetWeapon(Weapon.WeaponType.Sword);
-        maxHealth = 10.0f;
+        Actor actor = new Actor();
+
+        actor.faction = Faction.Player;
+        actor.weapon = Weapon.GetWeapon(Weapon.WeaponType.Sword);
+        actor.maxHealth = 10.0f;
+
+        return actor;
     }
 }

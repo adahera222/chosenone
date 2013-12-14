@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour {
 
-    void Awake()
+    // ================================================================================
+    //  Unity methods
+    // --------------------------------------------------------------------------------
+
+    void Start()
     {
-        GetComponent<ActorController>().actor.SetToPlayer();
+        GetComponent<ActorController>().actor = Actor.GetPlayer();
         GameMaster.Instance.player = GetComponent<ActorController>();
-    }
-
-    void Start() {
-
     }
 
     void Update() {

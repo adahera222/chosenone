@@ -31,7 +31,8 @@ public class HealthDisplay : MonoBehaviour {
     {
         if (GameMaster.Instance.state == GameMaster.GameState.Playing && GameMaster.Instance.player != null)
         {
-            DrawHealthBar(GameMaster.Instance.player.actor);
+            DrawHealthBar(GameMaster.Instance.player.actor, margin);
+            DrawHealthBar(GameMaster.Instance.player.actor, Screen.width - lifePointsWidth - margin);
         }
     }
 
@@ -39,23 +40,24 @@ public class HealthDisplay : MonoBehaviour {
     //  private methods
     // --------------------------------------------------------------------------------
 
-    private void DrawHealthBar(Actor actor)
+    private void DrawHealthBar(Actor actor, float xPos)
     {
         Rect rect;
 
         // draw background
-        rect = new Rect(margin, margin + size + margin, lifePointsWidth, lifePointsHeight);
+        rect = new Rect(xPos, margin, lifePointsWidth, lifePointsHeight);
         GUI.DrawTexture(rect, healthBarBackgroundImage);
 
         // draw health bar
         float percent = actor.health / actor.maxHealth;
-        rect = new Rect(margin, margin + size + margin, lifePointsWidth * percent, lifePointsHeight);
+        rect = new Rect(xPos, margin, lifePointsWidth * percent, lifePointsHeight);
         Rect textCoords = new Rect(0, 0, percent, 1.0f);
         GUI.DrawTexture(rect, healthBarImage);
         GUI.DrawTextureWithTexCoords(rect, healthBarImage, textCoords);
 
         // draw overlay
-        rect = new Rect(margin, margin + size + margin, lifePointsWidth, lifePointsHeight);
+        rect = new Rect(xPos, margin, lifePointsWidth, lifePointsHeight);
         GUI.DrawTexture(rect, healthOverlayImage);
     }
+
 }
