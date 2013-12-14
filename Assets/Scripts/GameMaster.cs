@@ -8,6 +8,8 @@ class GameMaster : MonoBehaviour
     //  declarations
     // --------------------------------------------------------------------------------
 
+    public delegate void GameStateChangeHandler(GameState newState);
+
     public enum GameState
     {
         Menu,
@@ -15,7 +17,8 @@ class GameMaster : MonoBehaviour
         Paused,
         Dying,
         Dead,
-        Loading
+        Loading,
+        Tutorial
     }
 
     public const float edgeTop = 1.0f;
@@ -25,12 +28,28 @@ class GameMaster : MonoBehaviour
     //  public
     // --------------------------------------------------------------------------------
 
+    public event GameStateChangeHandler gameStateChanged;
+
     public Dictionary<string,Battle> battles = new Dictionary<string,Battle>();
     public Dictionary<string, Weapon> weapons = new Dictionary<string, Weapon>();
 
-    public static GameMaster Instance = null;
+    public static GameMaster Instance = null; // Singleton
 
-    public GameState state = GameState.Playing;
+    public InterfaceManager interfaceManager;
+
+    private GameState _state;
+    public GameState state
+    {
+        get { return _state; }
+        set
+        {
+            _state = value;
+            if (gameStateChanged != null)
+            {
+                gameStateChanged(value);
+            }
+        }
+    }
 
     public ActorController player = null;
     public List<ActorController> actors = new List<ActorController>();
@@ -61,17 +80,30 @@ class GameMaster : MonoBehaviour
             return;
         }
 
+        _state = GameState.Playing;
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        interfaceManager = GetComponent<InterfaceManager>();
 
         CreateBattles();
 
         gameObject.SendMessage("OnLevelWasLoaded",Application.loadedLevel);
     }
 
-    void Start()
+    void Update()
     {
-        
+        // special keys
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (state == GameState.Playing)
+            {
+                Pause();
+            } else if (state == GameState.Paused)
+            {
+                Resume();
+            }            
+        }
     }
 
     void OnLevelWasLoaded(int level)
@@ -162,8 +194,6 @@ class GameMaster : MonoBehaviour
 
         float distanceFromEdge = 2.0f;
 
-        float horizontalDistance = Camera.main.orthographicSize * Camera.main.aspect;
-
         for (float i = 0; i <= 1.0f; i += 0.2f)
         {
             float y = Mathf.Lerp(edgeBottom, edgeTop, i);
@@ -186,5 +216,40 @@ class GameMaster : MonoBehaviour
         {
             battles["beginning"].enemies.Add(Actor.GetMob());
         }
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+        state = GameState.Paused;
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1.0f;
+        state = GameState.Playing;
+    }
+
+    public void StartMenu()
+    {
+        Application.LoadLevel(0);
+        state = GameState.Menu;
+    }
+
+    public void StartGame()
+    {
+        Application.LoadLevel(2);
+        state = GameState.Playing;
+    }
+
+    public void LoadTutorial()
+    {
+        Application.LoadLevel(1);
+        state = GameState.Tutorial;
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
