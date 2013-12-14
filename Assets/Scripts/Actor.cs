@@ -175,6 +175,17 @@ public class Actor {
         return abilities[0];
     }
 
+    public void Revive()
+    {
+        SetToFullHealth();
+        state = ActionState.Idle;
+    }
+
+    public void SetToFullHealth()
+    {
+        health = maxHealth;
+    }
+
     // ================================================================================
     //  private methods
     // --------------------------------------------------------------------------------

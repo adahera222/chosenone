@@ -22,6 +22,12 @@ class GameMaster : MonoBehaviour
         Outro
     }
 
+    public enum GameMode
+    {
+        Battle,
+        Walking
+    }
+
     public const float edgeTop = 1.0f;
     public const float edgeBottom = -2.7f;
 
@@ -51,6 +57,8 @@ class GameMaster : MonoBehaviour
             }
         }
     }
+
+    public GameMode mode = GameMode.Battle;
 
     public ActorController player = null;
     public List<ActorController> actors = new List<ActorController>();
@@ -147,18 +155,100 @@ class GameMaster : MonoBehaviour
         }
 
         lastBattleName = battleName;
+
+        mode = GameMode.Battle;
+        GameMaster.Instance.interfaceManager.ShowMessage("Fight!");
     }
 
     public void RestartLastBattle()
     {
         DestroyActors();
 
+        RevivePlayer();
+        state = GameState.Playing;
+
         StartBattle(lastBattleName);
+    }
+
+
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+        state = GameState.Paused;
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1.0f;
+        state = GameState.Playing;
+    }
+
+    public void StartMenu()
+    {
+        DestroyActors();
+        Time.timeScale = 1.0f;
+        Application.LoadLevel(0);
+        state = GameState.Menu;
+    }
+
+    public void StartGame()
+    {
+        Application.LoadLevel(2);
+        state = GameState.Playing;
+    }
+
+    public void LoadTutorial()
+    {
+        Application.LoadLevel(1);
+        state = GameState.Tutorial;
+    }
+
+    public void StartFirstBattle()
+    {
+        StartBattle("test");
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void PlayerDies()
+    {
+        state = GameState.Dead;
+    }
+
+    public void EnemyDies()
+    {
+        foreach (var actor in actors)
+        {
+            if (actor.actor.state != Actor.ActionState.Dead)
+            {
+                return;
+            }
+        }
+
+        // no one left
+        WinBattle();
     }
 
     // ================================================================================
     //  private methods
     // --------------------------------------------------------------------------------
+
+    private void WinBattle()
+    {
+        mode = GameMode.Walking;
+        player.actor.SetToFullHealth();
+        GameMaster.Instance.interfaceManager.ShowMessage("Battle Won");
+        StartCoroutine(ClearBattleField());
+    }
+
+    private IEnumerator ClearBattleField()
+    {
+        yield return new WaitForSeconds(2.0f);
+        DestroyActors();
+    }
 
     private void DestroyActors()
     {
@@ -173,6 +263,7 @@ class GameMaster : MonoBehaviour
     private void SpawnEnemy(Actor enemy)
     {
         // create object
+        enemy.Revive();
         GameObject newObject = (GameObject)Instantiate(actorPrefab, GetRandomSpawnPosition(), Quaternion.identity);
 
         // set to parent
@@ -214,61 +305,38 @@ class GameMaster : MonoBehaviour
 
     private void CreateBattles()
     {
-        battles["test"] = new Battle();
-        for (int i = 0; i < 8; i++)
-        {
-            battles["test"].enemies.Add(Actor.GetMob());
-        }
+        Battle battle;
 
-        battles["beginning"] = new Battle();
+        battle = new Battle();
+        for (int i = 0; i < 1; i++)
+        {
+            battle.enemies.Add(Actor.GetMob());
+        }
+        battles["test"] = battle;
+
+        battle = new Battle();
         for (int i = 0; i < 2; i++)
         {
-            battles["beginning"].enemies.Add(Actor.GetMob());
+            battle.enemies.Add(Actor.GetMob());
         }
+        battles["beginning"] = battle;
+
+        battle = new Battle();
+        for (int i = 0; i < 4; i++)
+        {
+            battle.enemies.Add(Actor.GetMob());
+        }
+        battles["progress0"] = battle;
+
+
     }
 
-    public void Pause()
+    private void RevivePlayer()
     {
-        Time.timeScale = 0f;
-        state = GameState.Paused;
-    }
-
-    public void Resume()
-    {
-        Time.timeScale = 1.0f;
-        state = GameState.Playing;
-    }
-
-    public void StartMenu()
-    {
-        Application.LoadLevel(0);
-        state = GameState.Menu;
-    }
-
-    public void StartGame()
-    {
-        Application.LoadLevel(2);
-        state = GameState.Playing;
-    }
-
-    public void LoadTutorial()
-    {
-        Application.LoadLevel(1);
-        state = GameState.Tutorial;
-    }
-
-    public void StartFirstBattle()
-    {
-        StartBattle("test");
-    }
-
-    public void Quit()
-    {
-        Application.Quit();
-    }
-
-    public void PlayerDies()
-    {
-        state = GameState.Dead;
+        GameObject player = GameObject.Find("Player");
+        player.transform.position = Camera.main.transform.position;
+        player.GetComponent<ActorController>().enabled = true;
+        player.GetComponent<Collider2D>().enabled = true;
+        player.GetComponent<ActorController>().actor.Revive();
     }
 }

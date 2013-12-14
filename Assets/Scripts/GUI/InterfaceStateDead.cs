@@ -4,9 +4,14 @@ using System.Collections.Generic;
 
 class InterfaceStateDead : IState
 {
+    bool started = false;
+
+    Timer startTimer = null;
+    FadingTimer timer = null;
+
     public void Enter()
     {
-        //GameMaster.Instance.interfaceManager.sceneFader.FadeOutFailure();
+        startTimer = new Timer(2.0f);
     }
 
     /// <summary>
@@ -14,6 +19,26 @@ class InterfaceStateDead : IState
     /// </summary>
     public void Update()
     {
+        if (startTimer != null)
+        {
+            startTimer.Update();
+
+            if (!startTimer.HasFinished())
+            {
+                return;
+            }
+
+            startTimer = null;
+            timer = new FadingTimer(0.5f, 1.0f);
+        }
+
+        timer.Update();
+
+        float progress = timer.progress;
+        GUI.color = new Color(1.0f, 1.0f, 1.0f, progress);
+
+        GameMaster.Instance.interfaceManager.DrawMenuBackground();
+
         const int buttonWidth = 260;
         const int buttonHeight = 80;
 
@@ -30,7 +55,7 @@ class InterfaceStateDead : IState
           )
         )
         {
-            GameMaster.Instance.Resume();
+            GameMaster.Instance.RestartLastBattle();
         }
 
         if (

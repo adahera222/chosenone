@@ -16,6 +16,9 @@ public class InterfaceManager : MonoBehaviour {
     public SceneFader sceneFader;
     public StateMachine stateMachine;
 
+    FadingTimer messageTimer = null;
+    string message = "";
+
     void Awake()
     {
         // create state machine
@@ -77,12 +80,43 @@ public class InterfaceManager : MonoBehaviour {
             GUI.skin = skin;
         }
 
-        stateMachine.Update();
+        UpdateMessages();
+
+        if (!Application.isLoadingLevel)
+        {
+            stateMachine.Update();            
+        }
     }
 
-    private void DrawMenuBackground()
+    public void DrawMenuBackground()
     {
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), menuBackgroundTexture);
     }
 
+    public void ShowMessage(string message)
+    {
+        messageTimer = new FadingTimer(0.5f, 3.0f, 0.5f);
+        this.message = message;
+    }
+
+    private void UpdateMessages()
+    {
+        if (messageTimer != null)
+        {
+            messageTimer.Update();
+            float progress = messageTimer.progress;
+
+            GUI.color = new Color(1.0f, 1.0f, 1.0f, progress);
+
+            Rect rect = new Rect(Screen.width / 2.0f - buttonWidth / 2.0f, Screen.height / 2.0f - buttonHeight / 2.0f, buttonWidth, buttonHeight);
+            GUI.Label(rect, message);
+
+            GUI.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+            if (messageTimer.hasEnded)
+            {
+                messageTimer = null;
+            }
+        }
+    }
 }

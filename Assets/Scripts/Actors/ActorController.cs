@@ -87,6 +87,10 @@ public class ActorController : MonoBehaviour {
             {
                 GameMaster.Instance.PlayerDies();
             }
+            else
+            {
+                GameMaster.Instance.EnemyDies();
+            }
         }
 
         // timer for hit visuals
@@ -177,11 +181,11 @@ public class ActorController : MonoBehaviour {
 
                 Vector3 movement = new Vector3(speed.x * moveDirection.x, speed.y * moveDirection.y, 0);
                 movement *= Time.deltaTime;
-                transform.Translate(movement);
+                _transform.Translate(movement);
 
-                if (movement.x > 0)
+                if (targetPosition.x > _transform.position.x)
                     SetMoveDirection(true);
-                if (movement.x < 0)
+                if (targetPosition.x < _transform.position.x)
                     SetMoveDirection(false);
             }
         }

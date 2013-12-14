@@ -17,10 +17,7 @@ class InterfaceStateTutorial : IState
         const int buttonWidth = 260;
         const int buttonHeight = 80;
 
-        if (Application.isLoadingLevel)
-        {
-            return;
-        }
+
 
         if (
           GUI.Button(
