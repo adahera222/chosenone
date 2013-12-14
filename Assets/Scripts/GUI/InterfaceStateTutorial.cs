@@ -22,12 +22,12 @@ class InterfaceStateTutorial : IState
         if (
           GUI.Button(
             // Center in X, 1/3 of the height in Y
-            new Rect(
-              Screen.width / 2 - (buttonWidth / 2),
-              (1 * Screen.height / 3) - (buttonHeight / 2),
-              buttonWidth,
-              buttonHeight
-            ),
+    new Rect(
+      Screen.width / 2 - (buttonWidth / 2),
+      Screen.height / 2 + buttonHeight + buttonHeight * 0.5f,
+      buttonWidth,
+      buttonHeight
+    ),
             "Play"
           )
         )

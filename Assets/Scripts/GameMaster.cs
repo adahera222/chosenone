@@ -58,7 +58,7 @@ class GameMaster : MonoBehaviour
         }
     }
 
-    public GameMode mode = GameMode.Battle;
+    public GameMode mode = GameMode.Walking;
 
     public ActorController player = null;
     public List<ActorController> actors = new List<ActorController>();
@@ -128,10 +128,9 @@ class GameMaster : MonoBehaviour
         }
     }
 
-    private IEnumerator StartTestBattle()
+    void OnLevelWasLoaded(int level)
     {
-        yield return new WaitForSeconds(0.1f);
-        StartBattle("test");
+        mode = GameMode.Walking;
     }
 
     // ================================================================================

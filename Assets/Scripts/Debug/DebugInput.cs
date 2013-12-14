@@ -12,13 +12,13 @@ public class DebugInput : MonoBehaviour
 
     void Update()
     {
-        if (Debug.isDebugBuild)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                GameMaster.Instance.RestartLastBattle();
-            }
-        }
+        //if (Debug.isDebugBuild)
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Space))
+        //    {
+        //        GameMaster.Instance.RestartLastBattle();
+        //    }
+        //}
     }
 
 }

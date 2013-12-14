@@ -19,6 +19,12 @@ class InterfaceStateDead : IState
     /// </summary>
     public void Update()
     {
+        // additional keys
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameMaster.Instance.RestartLastBattle();
+        }
+
         if (startTimer != null)
         {
             startTimer.Update();
