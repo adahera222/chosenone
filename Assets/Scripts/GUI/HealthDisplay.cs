@@ -32,7 +32,12 @@ public class HealthDisplay : MonoBehaviour {
         if (GameMaster.Instance.state == GameMaster.GameState.Playing && GameMaster.Instance.player != null)
         {
             DrawHealthBar(GameMaster.Instance.player.actor, margin);
-            DrawHealthBar(GameMaster.Instance.player.actor, Screen.width - lifePointsWidth - margin);
+
+            ActorController target = GameMaster.Instance.player.focusManager.focus;
+            if (target != null)
+            {
+                DrawHealthBar(target.actor, Screen.width - lifePointsWidth - margin);
+            }
         }
     }
 

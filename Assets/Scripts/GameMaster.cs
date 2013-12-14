@@ -76,6 +76,12 @@ class GameMaster : MonoBehaviour
 
     void OnLevelWasLoaded(int level)
     {
+        StartCoroutine(StartTestBattle());
+    }
+
+    private IEnumerator StartTestBattle()
+    {
+        yield return new WaitForSeconds(0.1f);
         StartBattle("test");
     }
 
@@ -100,19 +106,6 @@ class GameMaster : MonoBehaviour
         }
 
         lastBattleName = battleName;
-    }
-
-    public void CreateBattles()
-    {
-        battles["test"] = new Battle();
-        battles["test"].enemies.Add(new Actor() {
-            maxHealth = 10.0f, weapon = Weapon.GetWeapon(Weapon.WeaponType.Sword)
-        });
-        battles["test"].enemies.Add(new Actor()
-        {
-            maxHealth = 10.0f, weapon = Weapon.GetWeapon(Weapon.WeaponType.Axe)
-        });
-
     }
 
     public void RestartLastBattle()
@@ -177,6 +170,21 @@ class GameMaster : MonoBehaviour
 
             randomPositions.Add(new Vector3(bounds.xMin - distanceFromEdge, y, 0));
             randomPositions.Add(new Vector3(bounds.xMax + distanceFromEdge, y, 0));
+        }
+    }
+
+    private void CreateBattles()
+    {
+        battles["test"] = new Battle();
+        for (int i = 0; i < 6; i++)
+        {
+            battles["test"].enemies.Add(Actor.GetMob());
+        }
+
+        battles["beginning"] = new Battle();
+        for (int i = 0; i < 2; i++)
+        {
+            battles["test"].enemies.Add(Actor.GetMob());
         }
     }
 }

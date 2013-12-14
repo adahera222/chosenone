@@ -16,7 +16,6 @@ public class DebugInput : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log("Whaaa");
                 GameMaster.Instance.RestartLastBattle();
             }
         }

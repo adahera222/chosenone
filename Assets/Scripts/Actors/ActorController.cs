@@ -4,7 +4,12 @@ using System.Collections.Generic;
 
 public class ActorController : MonoBehaviour {
 
-    const float offsetX = 0.7f;
+    // ================================================================================
+    //  declarations
+    // --------------------------------------------------------------------------------
+
+    const float OFFSET_X = 0.7f;
+    const float MELEE_RANGE_SQUARED = 0.2f;
 
     // ================================================================================
     //  public
@@ -92,25 +97,22 @@ public class ActorController : MonoBehaviour {
 
         if (target != null)
         {
-            if (focusManager.focus == target)
+            // move
+            if (_transform.position.x > target.transform.position.x) // to the right
             {
-                // attack
+                targetPosition = new Vector3(target.transform.position.x + OFFSET_X, target.transform.position.y, 0);
             }
-            else
+            else // to the left
             {
-                // move
-                if (_transform.position.x > target.transform.position.x) // to the right
-                {
-                    targetPosition = new Vector3(target.transform.position.x + offsetX, target.transform.position.y, 0);
-                }
-                else // to the left
-                {
-                    targetPosition = new Vector3(target.transform.position.x - offsetX, target.transform.position.y, 0);
-                }
+                targetPosition = new Vector3(target.transform.position.x - OFFSET_X, target.transform.position.y, 0);
+            }
 
-                Debug.DrawLine(_transform.position, targetPosition);
+            Debug.DrawLine(_transform.position, targetPosition);
 
-                Vector3 moveDirection = targetPosition - _transform.position;
+            Vector3 moveDirection = targetPosition - _transform.position;
+
+            if (moveDirection.sqrMagnitude > MELEE_RANGE_SQUARED)
+            {
                 moveDirection.Normalize();
 
                 Vector3 movement = new Vector3(speed.x * moveDirection.x, speed.y * moveDirection.y, 0);
