@@ -6,8 +6,6 @@ public class PlayerController : MonoBehaviour {
 
     const float movementMargin = 0.5f;
 
-    private Vector2 speed = new Vector2(4.0f, 3.0f);
-
     private ActorController actorController;
 
     // ================================================================================
@@ -31,22 +29,15 @@ public class PlayerController : MonoBehaviour {
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
 
-        // turn right
-        if (inputX > 0 && !actorController.directionRight)
-        {
-            actorController.flipDirection();
-        }
+        // check directions
+        if (inputX > 0)
+            actorController.SetMoveDirection(true);
+        if (inputX < 0)
+            actorController.SetMoveDirection(false);
 
-        // turn left
-        if (inputX < 0 && actorController.directionRight)
-        {
-            actorController.flipDirection();
-        }
-
-        Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 0);
-
+        // movement
+        Vector3 movement = new Vector3(actorController.speed.x * inputX, actorController.speed.y * inputY, 0);
         movement *= Time.deltaTime;
-
         transform.Translate(movement);
 
         /*

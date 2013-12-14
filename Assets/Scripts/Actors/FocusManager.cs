@@ -18,8 +18,6 @@ public class FocusManager : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("enter");
-
         ActorController otherActor = other.gameObject.GetComponent<ActorController>();
 
         if (otherActor != null && !actors.Contains(otherActor))
@@ -35,8 +33,6 @@ public class FocusManager : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("exit");
-
         ActorController otherActor = other.gameObject.GetComponent<ActorController>();
 
         if (otherActor != null && actors.Contains(otherActor))
