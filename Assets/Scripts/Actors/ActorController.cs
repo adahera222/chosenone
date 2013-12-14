@@ -55,6 +55,11 @@ public class ActorController : MonoBehaviour {
         UpdateFocusDirection();
     }
 
+    public void SetActor(Actor actor)
+    {
+        this.actor = actor;
+    }
+
     // ================================================================================
     //  private methods
     // --------------------------------------------------------------------------------
