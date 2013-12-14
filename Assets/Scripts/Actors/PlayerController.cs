@@ -30,11 +30,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (actorController.actor.state == Actor.ActionState.Idle)
             {
-                Action action = actorController.actor.GetMainAbility();
-                action.source = actorController;
-                action.target = actorController.focusManager.focus;
-
-                actorController.actor.TakeAction(action);
+                actorController.StandardAction();
             }
         }
 

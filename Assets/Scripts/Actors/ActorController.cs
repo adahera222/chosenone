@@ -52,7 +52,7 @@ public class ActorController : MonoBehaviour {
     }
 
     void Start() {
-        GetMovementTarget();
+        
     }
 
     void Update() {
@@ -61,18 +61,35 @@ public class ActorController : MonoBehaviour {
             actor.Update();
         }
 
+        // calculate enemy actions
         if (actor.faction != Actor.Faction.Player)
         {
+            GetMovementTarget();
+
+            if (actor.state == Actor.ActionState.Idle)
+            {
+                if (focusManager.focus != null && focusManager.focus.actor.faction != actor.faction)
+                {
+                    StandardAction();
+                }
+            }
             MoveToTarget();
         }
 
+        // execute dead status
         if (actor.state == Actor.ActionState.Dead)
         {
             ShowHit(false);
             GetComponent<Collider2D>().enabled = false;
             this.enabled = false;
+
+            if (actor.faction == Actor.Faction.Player)
+            {
+                GameMaster.Instance.PlayerDies();
+            }
         }
 
+        // timer for hit visuals
         if (_hitTimer != null)
         {
             _hitTimer.Update();
@@ -83,6 +100,7 @@ public class ActorController : MonoBehaviour {
             }
         }
 
+        // calculate z value
         UpdateDepth();
     }
 
@@ -118,6 +136,15 @@ public class ActorController : MonoBehaviour {
     {
         actor.ApplyDamage(d);
         ShowHit(true);
+    }
+
+    public void StandardAction()
+    {
+        Action action = actor.GetMainAbility();
+        action.source = this;
+        action.target = focusManager.focus;
+
+        actor.TakeAction(action);
     }
 
     // ================================================================================

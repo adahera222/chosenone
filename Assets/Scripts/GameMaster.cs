@@ -18,7 +18,8 @@ class GameMaster : MonoBehaviour
         Dying,
         Dead,
         Loading,
-        Tutorial
+        Tutorial,
+        Outro
     }
 
     public const float edgeTop = 1.0f;
@@ -80,15 +81,28 @@ class GameMaster : MonoBehaviour
             return;
         }
 
-        _state = GameState.Playing;
+        if (Application.loadedLevel == 0)
+        {
+            _state = GameState.Menu;
+        }
+        else if (Application.loadedLevel == 1)
+        {
+            _state = GameState.Tutorial;
+        }
+        else if (Application.loadedLevel == Application.levelCount - 1)
+        {
+            _state = GameState.Outro;
+        }
+        else
+        {
+            _state = GameState.Playing;
+        }
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
         interfaceManager = GetComponent<InterfaceManager>();
 
         CreateBattles();
-
-        gameObject.SendMessage("OnLevelWasLoaded",Application.loadedLevel);
     }
 
     void Update()
@@ -104,11 +118,6 @@ class GameMaster : MonoBehaviour
                 Resume();
             }            
         }
-    }
-
-    void OnLevelWasLoaded(int level)
-    {
-        StartCoroutine(StartTestBattle());
     }
 
     private IEnumerator StartTestBattle()
@@ -248,8 +257,18 @@ class GameMaster : MonoBehaviour
         state = GameState.Tutorial;
     }
 
+    public void StartFirstBattle()
+    {
+        StartBattle("test");
+    }
+
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void PlayerDies()
+    {
+        state = GameState.Dead;
     }
 }

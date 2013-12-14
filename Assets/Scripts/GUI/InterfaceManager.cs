@@ -29,9 +29,15 @@ public class InterfaceManager : MonoBehaviour {
     void Start()
     {
         GameMaster.Instance.gameStateChanged += Instance_gameStateChanged;
+        OnSwitchedState(GameMaster.Instance.state);
     }
 
     void Instance_gameStateChanged(GameMaster.GameState newState)
+    {
+        OnSwitchedState(newState);
+    }
+
+    private void OnSwitchedState(GameMaster.GameState newState)
     {
         switch (newState)
         {
@@ -47,6 +53,7 @@ public class InterfaceManager : MonoBehaviour {
             case GameMaster.GameState.Dying:
                 break;
             case GameMaster.GameState.Dead:
+                stateMachine.switchToState(new InterfaceStateDead());
                 break;
             case GameMaster.GameState.Loading:
                 break;
@@ -63,6 +70,11 @@ public class InterfaceManager : MonoBehaviour {
         if (GameMaster.Instance.state == GameMaster.GameState.Paused)
         {
             DrawMenuBackground();
+        }
+
+        if (skin != null)
+        {
+            GUI.skin = skin;
         }
 
         stateMachine.Update();
