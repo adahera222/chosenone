@@ -24,9 +24,11 @@ public class Action {
     public ActionType type;
     public float delta = 1.0f;
     public float duration = 1.0f;
-    public bool canMove = false;
+    public bool canMove = true;
 
     public bool hasStarted = false;
+
+    public Action followWithAction = null;
 
     // ================================================================================
     //  private
@@ -40,7 +42,10 @@ public class Action {
 
     public void StartAction()
     {
+        //Debug.Log("Action started: " + Time.time);
+
         hasStarted = true;
+        timer.duration = duration;
         timer.Reset();
     }
 
@@ -58,6 +63,13 @@ public class Action {
         }
     }
 
+    public void EndAction()
+    {
+        hasStarted = false;
+
+        //Debug.Log("Action ended: " + Time.time);
+    }
+
     public bool HasFinished()
     {
         return timer.HasFinished();
@@ -73,7 +85,11 @@ public class Action {
         {
             case ActionType.MeleeAttack:
                 float d = source.actor.DealDamage(this);
-                target.actor.ApplyDamage(d);
+                target = source.focusManager.focus;
+                if (target != null)
+                {
+                    target.actor.ApplyDamage(d);
+                }
                 break;
             case ActionType.Wait:
                 break;
@@ -91,12 +107,17 @@ public class Action {
         return action;
     }
 
-    public static Action GetMeleeAction(float delta, float time)
+    public static Action GetMeleeAction(float delta, float time, float waitAfter = 0.5f)
     {
         Action action = new Action();
         action.type = ActionType.MeleeAttack;
         action.duration = time;
         action.delta = delta;
+
+        if (waitAfter > 0)
+        {
+            action.followWithAction = GetWaitAction(waitAfter);
+        }
 
         return action;
     }

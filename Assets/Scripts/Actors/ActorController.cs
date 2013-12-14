@@ -49,7 +49,7 @@ public class ActorController : MonoBehaviour {
     }
 
     void Start() {
-        GetTarget();
+        GetMovementTarget();
     }
 
     void Update() {
@@ -62,6 +62,14 @@ public class ActorController : MonoBehaviour {
         {
             MoveToTarget();
         }
+
+        if (actor.state == Actor.ActionState.Dead)
+        {
+            GetComponent<Collider2D>().enabled = false;
+            this.enabled = false;
+        }
+
+        UpdateDepth();
     }
 
     // ================================================================================
@@ -105,11 +113,11 @@ public class ActorController : MonoBehaviour {
             // move
             if (_transform.position.x > target.transform.position.x) // to the right
             {
-                targetPosition = new Vector3(target.transform.position.x + OFFSET_X, target.transform.position.y, 0);
+                targetPosition = new Vector3(target.transform.position.x + OFFSET_X, target.transform.position.y, _transform.position.z);
             }
             else // to the left
             {
-                targetPosition = new Vector3(target.transform.position.x - OFFSET_X, target.transform.position.y, 0);
+                targetPosition = new Vector3(target.transform.position.x - OFFSET_X, target.transform.position.y, _transform.position.z);
             }
 
             Debug.DrawLine(_transform.position, targetPosition);
@@ -132,7 +140,12 @@ public class ActorController : MonoBehaviour {
         }
     }
 
-    private void GetTarget()
+    private void UpdateDepth()
+    {
+        _transform.position = new Vector3(_transform.position.x, _transform.position.y, _transform.position.y);
+    }
+
+    private void GetMovementTarget()
     {
         if (actor.faction != Actor.Faction.Player)
         {

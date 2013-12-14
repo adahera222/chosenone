@@ -4,16 +4,28 @@ using System.Collections.Generic;
 
 public class FocusManager : MonoBehaviour {
 
-    private List<ActorController> actors = new List<ActorController>();
+    // ================================================================================
+    //  public
+    // --------------------------------------------------------------------------------
 
     public ActorController focus = null;
 
-    void Start() {
+    // ================================================================================
+    //  private
+    // --------------------------------------------------------------------------------
 
-    }
+    private List<ActorController> actors = new List<ActorController>();
 
-    void Update() {
-
+    // ================================================================================
+    //  Unity methods
+    // --------------------------------------------------------------------------------
+    
+    void Update()
+    {
+        if (focus != null && focus.actor.state == Actor.ActionState.Dead)
+        {
+            RemoveFromList(focus);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -35,11 +47,20 @@ public class FocusManager : MonoBehaviour {
     {
         ActorController otherActor = other.gameObject.GetComponent<ActorController>();
 
-        if (otherActor != null && actors.Contains(otherActor))
-        {
-            actors.Remove(otherActor);
+        RemoveFromList(otherActor);
+    }
 
-            if (focus == otherActor)
+    // ================================================================================
+    //  public methods
+    // --------------------------------------------------------------------------------
+
+    public void RemoveFromList(ActorController actor)
+    {
+        if (actor != null && actors.Contains(actor))
+        {
+            actors.Remove(actor);
+
+            if (focus == actor)
             {
                 focus = null;
 

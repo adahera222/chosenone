@@ -123,6 +123,7 @@ public class Actor {
 
         if (currentAction.HasFinished())
         {
+            currentAction.EndAction();
             _actions.RemoveAt(0);
 
             if (_actions.Count == 0)
@@ -144,9 +145,13 @@ public class Actor {
         }
     }
 
-    public void AddAction(Action action)
+    public void TakeAction(Action action)
     {
         _actions.Add(action);
+        if (action.followWithAction != null)
+        {
+            TakeAction(action.followWithAction);
+        }
     }
 
     public float DealDamage(Action action)
@@ -160,8 +165,14 @@ public class Actor {
 
         if (health <= 0)
         {
+            health = 0;
             Die();
         }
+    }
+
+    public Action GetMainAbility()
+    {
+        return abilities[0];
     }
 
     // ================================================================================
@@ -185,7 +196,7 @@ public class Actor {
         actor.weapon = Weapon.GetWeapon(Weapon.WeaponType.Sword);
         actor.maxHealth = 10.0f;
 
-        actor.abilities.Add(Action.GetMeleeAction(1.0f, 1.0f));
+        actor.abilities.Add(Action.GetMeleeAction(1.0f, 0.3f));
 
         return actor;
     }
@@ -198,7 +209,7 @@ public class Actor {
         actor.weapon = Weapon.GetWeapon(Weapon.WeaponType.Sword);
         actor.maxHealth = 2.0f;
 
-        actor.abilities.Add(Action.GetMeleeAction(1.0f, 1.0f));
+        actor.abilities.Add(Action.GetMeleeAction(1.0f, 0.3f));
 
         return actor;
     }

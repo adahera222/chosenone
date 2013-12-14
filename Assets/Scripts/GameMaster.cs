@@ -176,7 +176,7 @@ class GameMaster : MonoBehaviour
     private void CreateBattles()
     {
         battles["test"] = new Battle();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 8; i++)
         {
             battles["test"].enemies.Add(Actor.GetMob());
         }
@@ -184,7 +184,7 @@ class GameMaster : MonoBehaviour
         battles["beginning"] = new Battle();
         for (int i = 0; i < 2; i++)
         {
-            battles["test"].enemies.Add(Actor.GetMob());
+            battles["beginning"].enemies.Add(Actor.GetMob());
         }
     }
 }
