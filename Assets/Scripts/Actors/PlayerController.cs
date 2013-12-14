@@ -16,29 +16,45 @@ public class PlayerController : MonoBehaviour {
     {
         actorController = GetComponent<ActorController>();
 
-        actorController.actor = Actor.GetPlayer();
+        actorController.SetActor(Actor.GetPlayer());
         GameMaster.Instance.player = GetComponent<ActorController>();
     }
 
     void Update() {
 
         /*
+         *  actions
+         */
+
+        if (Input.GetButton("Fire1"))
+        {
+            if (!actorController.actor.HasActions())
+            {
+
+            }
+        }
+
+        /*
          *  movement
          */
 
-        float inputX = Input.GetAxis("Horizontal");
-        float inputY = Input.GetAxis("Vertical");
+        if (actorController.actor.state == Actor.ActionState.Idle
+            || (actorController.actor.state == Actor.ActionState.TakingAction && actorController.actor.currentAction.canMove))
+        {
+            float inputX = Input.GetAxis("Horizontal");
+            float inputY = Input.GetAxis("Vertical");
 
-        // check directions
-        if (inputX > 0)
-            actorController.SetMoveDirection(true);
-        if (inputX < 0)
-            actorController.SetMoveDirection(false);
+            // check directions
+            if (inputX > 0)
+                actorController.SetMoveDirection(true);
+            if (inputX < 0)
+                actorController.SetMoveDirection(false);
 
-        // movement
-        Vector3 movement = new Vector3(actorController.speed.x * inputX, actorController.speed.y * inputY, 0);
-        movement *= Time.deltaTime;
-        transform.Translate(movement);
+            // movement
+            Vector3 movement = new Vector3(actorController.speed.x * inputX, actorController.speed.y * inputY, 0);
+            movement *= Time.deltaTime;
+            transform.Translate(movement);
+        }
 
         /*
          *  checking 'out of bounds'

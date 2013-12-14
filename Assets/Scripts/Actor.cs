@@ -29,23 +29,44 @@ public class Actor {
 
     //state
     public ActionState state;
+    public List<Action> abilities = new List<Action>();
 
     // stats
     private float _maxHealth;
-    public float maxHealth
-    {
-        get { return _maxHealth; }
-        set {
-            _maxHealth = value;
-            health = maxHealth;
-        }
-    }        
     public float health;
     public float damageModifier = 1.0f;
     public float defense = 1.0f;
 
     // inventory
     public Weapon weapon = null;
+
+    // ================================================================================
+    //  getters and setters
+    // --------------------------------------------------------------------------------
+
+    public Action currentAction
+    {
+        get
+        {
+            if (_actions.Count > 0)
+            {
+                return _actions[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
+    public float maxHealth
+    {
+        get { return _maxHealth; }
+        set
+        {
+            _maxHealth = value;
+            health = maxHealth;
+        }
+    }        
 
     // ================================================================================
     //  private
@@ -75,7 +96,10 @@ public class Actor {
 
     public void Update()
     {
-        UpdateActionList();
+        if (state != ActionState.Dead)
+        {
+            UpdateActionList();
+        }
     }
 
     private void UpdateActionList()
@@ -90,6 +114,8 @@ public class Actor {
         if (!currentAction.hasStarted)
         {
             currentAction.StartAction();
+
+            state = ActionState.TakingAction;
             return;
         }
 
@@ -98,7 +124,53 @@ public class Actor {
         if (currentAction.HasFinished())
         {
             _actions.RemoveAt(0);
+
+            if (_actions.Count == 0)
+            {
+                state = ActionState.Idle;
+            }
         }
+    }
+
+    public bool HasActions()
+    {
+        if (_actions.Count > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void AddAction(Action action)
+    {
+        _actions.Add(action);
+    }
+
+    public float DealDamage(Action action)
+    {
+        return weapon.damage * action.delta * damageModifier;
+    }
+
+    public void ApplyDamage(float d)
+    {
+        health -= d;
+
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    // ================================================================================
+    //  private methods
+    // --------------------------------------------------------------------------------
+
+    private void Die()
+    {
+        state = ActionState.Dead;
     }
 
     // ================================================================================
@@ -113,6 +185,8 @@ public class Actor {
         actor.weapon = Weapon.GetWeapon(Weapon.WeaponType.Sword);
         actor.maxHealth = 10.0f;
 
+        actor.abilities.Add(Action.GetMeleeAction(1.0f, 1.0f));
+
         return actor;
     }
 
@@ -123,6 +197,8 @@ public class Actor {
         actor.faction = Faction.Enemy;
         actor.weapon = Weapon.GetWeapon(Weapon.WeaponType.Sword);
         actor.maxHealth = 2.0f;
+
+        actor.abilities.Add(Action.GetMeleeAction(1.0f, 1.0f));
 
         return actor;
     }

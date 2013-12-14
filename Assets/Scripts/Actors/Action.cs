@@ -18,7 +18,7 @@ public class Action {
     //  public
     // --------------------------------------------------------------------------------
 
-    public ActorController self;
+    public ActorController source;
     public ActorController target;
 
     public ActionType type;
@@ -72,7 +72,8 @@ public class Action {
         switch (type)
         {
             case ActionType.MeleeAttack:
-
+                float d = source.actor.DealDamage(this);
+                target.actor.ApplyDamage(d);
                 break;
             case ActionType.Wait:
                 break;

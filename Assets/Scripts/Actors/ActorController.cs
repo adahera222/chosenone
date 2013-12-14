@@ -53,9 +53,14 @@ public class ActorController : MonoBehaviour {
     }
 
     void Update() {
+        if (actor != null)
+        {
+            actor.Update();
+        }
+
         if (actor.faction != Actor.Faction.Player)
         {
-            TakeAction();
+            MoveToTarget();
         }
     }
 
@@ -91,7 +96,7 @@ public class ActorController : MonoBehaviour {
     //  private methods
     // --------------------------------------------------------------------------------
 
-    private void TakeAction()
+    private void MoveToTarget()
     {
         Vector3 targetPosition;
 
