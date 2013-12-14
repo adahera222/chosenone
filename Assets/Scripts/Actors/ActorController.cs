@@ -50,8 +50,12 @@ public class ActorController : MonoBehaviour {
 
     public void flipDirection()
     {
+        directionRight = !directionRight;
+
+        // change visual avatar
         Transform t = displayObject.transform;
         t.localScale = new Vector3(t.localScale.x * -1.0f, t.localScale.y, t.localScale.z);
+
         UpdateFocusDirection();
     }
 

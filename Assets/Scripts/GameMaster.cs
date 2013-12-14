@@ -18,8 +18,8 @@ class GameMaster : MonoBehaviour
         Loading
     }
 
-    const float edgeTop = 1.0f;
-    const float edgeBottom = -2.7f;
+    public const float edgeTop = 1.0f;
+    public const float edgeBottom = -2.7f;
 
     // ================================================================================
     //  public
@@ -42,6 +42,7 @@ class GameMaster : MonoBehaviour
     // --------------------------------------------------------------------------------
 
     private List<Vector3> randomPositions;
+    private string lastBattleName;
 
     // ================================================================================
     //  Unity methods
@@ -97,6 +98,8 @@ class GameMaster : MonoBehaviour
         {
             SpawnEnemy(enemy);
         }
+
+        lastBattleName = battleName;
     }
 
     public void CreateBattles()
@@ -112,6 +115,13 @@ class GameMaster : MonoBehaviour
 
     }
 
+    public void RestartLastBattle()
+    {
+        DestroyActors();
+
+        StartBattle(lastBattleName);
+    }
+
     // ================================================================================
     //  private methods
     // --------------------------------------------------------------------------------
@@ -121,8 +131,9 @@ class GameMaster : MonoBehaviour
         for (int i = 0; i < actors.Count; i++)
         {
             Destroy(actors[i].gameObject);
-            actors.Clear();
         }
+
+        actors.Clear();
     }
 
     private void SpawnEnemy(Actor enemy)
