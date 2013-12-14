@@ -88,7 +88,7 @@ public class Action {
                 target = source.focusManager.focus;
                 if (target != null)
                 {
-                    target.actor.ApplyDamage(d);
+                    target.ApplyDamage(d);
                 }
                 break;
             case ActionType.Wait:

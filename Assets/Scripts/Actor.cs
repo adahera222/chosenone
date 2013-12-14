@@ -207,7 +207,7 @@ public class Actor {
 
         actor.faction = Faction.Enemy;
         actor.weapon = Weapon.GetWeapon(Weapon.WeaponType.Sword);
-        actor.maxHealth = 2.0f;
+        actor.maxHealth = 3.0f;
 
         actor.abilities.Add(Action.GetMeleeAction(1.0f, 0.3f));
 

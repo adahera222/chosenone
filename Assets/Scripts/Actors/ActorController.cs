@@ -34,6 +34,9 @@ public class ActorController : MonoBehaviour {
     private FocusManager focusLeft = null;
     private Transform _transform;
 
+    private Timer _hitTimer = null;
+    private Color _originalColor;
+
     // ================================================================================
     //  Unity methods
     // --------------------------------------------------------------------------------
@@ -65,8 +68,19 @@ public class ActorController : MonoBehaviour {
 
         if (actor.state == Actor.ActionState.Dead)
         {
+            ShowHit(false);
             GetComponent<Collider2D>().enabled = false;
             this.enabled = false;
+        }
+
+        if (_hitTimer != null)
+        {
+            _hitTimer.Update();
+
+            if (_hitTimer.HasFinished())
+            {
+                ShowHit(false);
+            }
         }
 
         UpdateDepth();
@@ -98,6 +112,12 @@ public class ActorController : MonoBehaviour {
     public void SetActor(Actor actor)
     {
         this.actor = actor;
+    }
+
+    public void ApplyDamage(float d)
+    {
+        actor.ApplyDamage(d);
+        ShowHit(true);
     }
 
     // ================================================================================
@@ -162,6 +182,30 @@ public class ActorController : MonoBehaviour {
         else
         {
             focusManager = focusLeft;
+        }
+    }
+
+    private void ShowHit(bool show)
+    {
+        if (show)
+        {
+            if (_hitTimer != null)
+            {
+                _hitTimer.Reset();
+                return;
+            }
+
+            _hitTimer = new Timer(0.2f);
+            _originalColor = displayObject.renderer.material.color;
+            displayObject.renderer.material.color = new Color(1.0f, 0.4f, 0.4f);
+        }
+        else
+        {
+            if (_hitTimer != null)
+            {
+                displayObject.renderer.material.color = _originalColor;
+                _hitTimer = null;
+            }
         }
     }
 
