@@ -1,0 +1,292 @@
+fileFormatVersion: 2
+guid: 5d98fcfca1fa45343bb4bc4e3842f191
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: male_head1
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 1835
+        width: 168
+        height: 166
+      alignment: 9
+      pivot: {x: .567645013, y: .126103774}
+    - name: male_head4
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 1835
+        width: 173
+        height: 136
+      alignment: 9
+      pivot: {x: .53537184, y: .172181964}
+    - name: male_torso1
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 1647
+        width: 160
+        height: 166
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: male_torso2
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 1653
+        width: 157
+        height: 155
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: male_torso3
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 1653
+        width: 159
+        height: 156
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: male_torso4
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1647
+        width: 160
+        height: 166
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: male_torso5
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 1653
+        width: 159
+        height: 156
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: male_foot
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 1527
+        width: 69
+        height: 92
+      alignment: 9
+      pivot: {x: .440082043, y: .769632101}
+    - name: female_head1
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 1317
+        width: 200
+        height: 162
+      alignment: 9
+      pivot: {x: .573470354, y: .12509042}
+    - name: female_head2
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 1317
+        width: 201
+        height: 164
+      alignment: 9
+      pivot: {x: .573104799, y: .129661739}
+    - name: female_torso1
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 1133
+        width: 148
+        height: 156
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: female_torso2
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 1128
+        width: 147
+        height: 161
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: female_foot
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 1039
+        width: 67
+        height: 84
+      alignment: 9
+      pivot: {x: .368411839, y: .768224835}
+    - name: hand
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 896
+        width: 54
+        height: 51
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: shield1
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 743
+        width: 169
+        height: 204
+      alignment: 9
+      pivot: {x: .551036954, y: .635297894}
+    - name: shield2
+      rect:
+        serializedVersion: 2
+        x: 419
+        y: 688
+        width: 141
+        height: 249
+      alignment: 9
+      pivot: {x: .5, y: .652413845}
+    - name: shield3
+      rect:
+        serializedVersion: 2
+        x: 645
+        y: 741
+        width: 158
+        height: 180
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: shield4
+      rect:
+        serializedVersion: 2
+        x: 871
+        y: 741
+        width: 166
+        height: 204
+      alignment: 9
+      pivot: {x: .510392129, y: .635298193}
+    - name: axe1
+      rect:
+        serializedVersion: 2
+        x: 1320
+        y: 608
+        width: 87
+        height: 307
+      alignment: 9
+      pivot: {x: .341669202, y: .120652787}
+    - name: sword3
+      rect:
+        serializedVersion: 2
+        x: 1472
+        y: 617
+        width: 41
+        height: 295
+      alignment: 9
+      pivot: {x: .53054142, y: .122201487}
+    - name: axe2
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 613
+        width: 101
+        height: 368
+      alignment: 9
+      pivot: {x: .239630073, y: .101865187}
+    - name: sword4
+      rect:
+        serializedVersion: 2
+        x: 1743
+        y: 611
+        width: 73
+        height: 317
+      alignment: 9
+      pivot: {x: .518852353, y: .104967758}
+    - name: sword1
+      rect:
+        serializedVersion: 2
+        x: 1121
+        y: 623
+        width: 58
+        height: 264
+      alignment: 9
+      pivot: {x: .5431813, y: .115786001}
+    - name: sword2
+      rect:
+        serializedVersion: 2
+        x: 1221
+        y: 615
+        width: 51
+        height: 276
+      alignment: 9
+      pivot: {x: .5, y: .09165667}
+    - name: male_head2
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 1835
+        width: 164
+        height: 166
+      alignment: 9
+      pivot: {x: .585286021, y: .110305235}
+    - name: male_head3
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 1831
+        width: 174
+        height: 140
+      alignment: 9
+      pivot: {x: .540192366, y: .181549072}
+    - name: male_head5
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 1831
+        width: 163
+        height: 170
+      alignment: 9
+      pivot: {x: .601898372, y: .145185396}
+  spritePackingTag: 
+  userData: 
