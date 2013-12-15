@@ -44,6 +44,7 @@ public class ActorController : MonoBehaviour {
     private FadingTimer _fadeOutTimer = null;
 
     private AnimationController _animationController;
+    private AudioController _audioController;
 
     // ================================================================================
     //  Unity methods
@@ -53,6 +54,7 @@ public class ActorController : MonoBehaviour {
     {
         _transform = transform;
         _animationController = GetComponent<AnimationController>();
+        _audioController = GetComponent<AudioController>();
 
         focusRight = transform.Find("focusRight").GetComponent<FocusManager>();
         focusLeft = transform.Find("focusLeft").GetComponent<FocusManager>();
@@ -88,6 +90,7 @@ public class ActorController : MonoBehaviour {
         // execute dead status
         if (actor.state == Actor.ActionState.Dead)
         {
+            _audioController.PlayDeathSound();
             _animationController.FadeOut();
 
             ShowHit(false);
@@ -149,12 +152,16 @@ public class ActorController : MonoBehaviour {
 
     public void ApplyDamage(float d)
     {
+        _audioController.PlayHitSound();
+
         actor.ApplyDamage(d);
         ShowHit(true);
     }
 
     public void StandardAction()
     {
+        _audioController.PlayAttackSound();
+
         Action action = actor.GetMainAbility();
         action.source = this;
         action.target = focusManager.focus;

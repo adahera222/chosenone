@@ -345,13 +345,6 @@ class GameMaster : MonoBehaviour
         Battle battle;
 
         battle = new Battle();
-        for (int i = 0; i < 1; i++)
-        {
-            battle.enemies.Add(Actor.GetMob());
-        }
-        battles["test"] = battle;
-
-        battle = new Battle();
         for (int i = 0; i < 2; i++)
         {
             battle.enemies.Add(Actor.GetMob());
@@ -366,21 +359,21 @@ class GameMaster : MonoBehaviour
         battles["progress0"] = battle;
 
         battle = new Battle();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             battle.enemies.Add(Actor.GetMob());
         }
         battles["progress1"] = battle;
 
         battle = new Battle();
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 2; i++)
         {
             battle.enemies.Add(Actor.GetMob());
         }
         battles["progress2"] = battle;
 
         battle = new Battle();
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 2; i++)
         {
             battle.enemies.Add(Actor.GetMob());
         }
