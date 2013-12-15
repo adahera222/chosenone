@@ -28,8 +28,8 @@ class GameMaster : MonoBehaviour
         Walking
     }
 
-    public const float edgeTop = 1.0f;
-    public const float edgeBottom = -2.7f;
+    public const float edgeTop = 0.2f;
+    public const float edgeBottom = -3.1f;
 
     // ================================================================================
     //  public
