@@ -58,7 +58,8 @@ public class PlayerController : MonoBehaviour {
                 && movement.x > 0
                 && transform.position.x > Camera.main.transform.position.x + 0.2f)
             {
-                Camera.main.transform.Translate(new Vector3(movement.x, 0, 0));
+                Camera.main.transform.GetComponent<CameraParallax>().Move(new Vector3(movement.x, 0, 0));
+                //Camera.main.transform.Translate(new Vector3(movement.x, 0, 0));
             }
 
             transform.Translate(movement);
