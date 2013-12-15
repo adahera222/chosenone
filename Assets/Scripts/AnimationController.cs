@@ -48,6 +48,11 @@ public class AnimationController : MonoBehaviour {
         {
             _fadeOutTimer.Update();
             ApplyFadeOut();
+
+            if (_fadeOutTimer.hasEnded)
+            {
+                SetMaterialColor(new Color(1.0f, 1.0f, 1.0f, 0f));
+            }
         }
     }
 

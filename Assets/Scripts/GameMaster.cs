@@ -281,6 +281,7 @@ class GameMaster : MonoBehaviour
         // create object
         enemy.Revive();
         GameObject newObject = (GameObject)Instantiate(actorPrefab, GetRandomSpawnPosition(), Quaternion.identity);
+        SetRandomImages(newObject);
 
         // set to parent
         Transform parentObject = GameObject.Find("3 - Actors").transform;
@@ -292,6 +293,26 @@ class GameMaster : MonoBehaviour
 
         // add to list
         actors.Add(actorController);
+    }
+
+    private void SetRandomImages(GameObject parentObject)
+    {
+        // in case you wonder about the specific names:
+        // did not bother to rename child objects because i believe animations are hardcoded to child object names
+
+        // weapon
+        int i = Random.Range(0, weaponPrefabs.Count);
+        SpriteRenderer spriteRenderer = parentObject.transform.Find("Avatar").Find("weapon").GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = weaponPrefabs[i];
+
+        // female_head1
+        i = Random.Range(0, headPrefabs.Count);
+        spriteRenderer = parentObject.transform.Find("Avatar").Find("female_head1").GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = headPrefabs[i];
+
+        // female_torso1
+        spriteRenderer = parentObject.transform.Find("Avatar").Find("female_torso1").GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = torsoPrefabs[i];
     }
 
     private Vector3 GetRandomSpawnPosition()
@@ -343,6 +364,27 @@ class GameMaster : MonoBehaviour
             battle.enemies.Add(Actor.GetMob());
         }
         battles["progress0"] = battle;
+
+        battle = new Battle();
+        for (int i = 0; i < 3; i++)
+        {
+            battle.enemies.Add(Actor.GetMob());
+        }
+        battles["progress1"] = battle;
+
+        battle = new Battle();
+        for (int i = 0; i < 4; i++)
+        {
+            battle.enemies.Add(Actor.GetMob());
+        }
+        battles["progress2"] = battle;
+
+        battle = new Battle();
+        for (int i = 0; i < 5; i++)
+        {
+            battle.enemies.Add(Actor.GetMob());
+        }
+        battles["progress3"] = battle;
     }
 
     private void RevivePlayer()
