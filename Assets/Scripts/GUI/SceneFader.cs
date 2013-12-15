@@ -33,7 +33,7 @@ public class SceneFader : MonoBehaviour
 
     private FadeType _currentFadeType = FadeType.none;
 
-    private Color _guiColor = Color.white;
+    private Color _guiColor = new Color(0.75f, 0.66f, 0.56f);
 
     // ================================================================================
     //  unity methods
@@ -93,10 +93,11 @@ public class SceneFader : MonoBehaviour
         CalculateScreenRect();
 
         _currentFadeType = FadeType.fadeIn;
-        _startColor = Color.white;
-        _targetColor = Color.white;
+        _startColor = _guiColor;
+        _targetColor = _guiColor;
         _targetColor.a = 0f;
         _currentTime = 0;
+        _currentColor = _startColor;
 
         _fadeTime = fadeTime.GetValueOrDefault(standardFadeDuration);
     }
@@ -110,6 +111,7 @@ public class SceneFader : MonoBehaviour
         _startColor.a = 0f;
         _targetColor = Color.white;
         _currentTime = 0;
+        _currentColor = _startColor;
 
         _fadeTime = fadeTime.GetValueOrDefault(standardFadeDuration);
     }
@@ -119,10 +121,11 @@ public class SceneFader : MonoBehaviour
         CalculateScreenRect();
 
         _currentFadeType = FadeType.fadeOutSuccess;
-        _startColor = Color.white;
+        _startColor = _guiColor;
         _startColor.a = 0f;
         _targetColor = _guiColor;
         _currentTime = 0;
+        _currentColor = _startColor;
 
         _fadeTime = fadeTime.GetValueOrDefault(standardFadeDuration);
     }

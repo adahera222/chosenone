@@ -39,7 +39,11 @@ public class ActorController : MonoBehaviour {
     private Transform _transform;
 
     private Timer _hitTimer = null;
-    private Color _originalColor;
+    private Color _originalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+    private FadingTimer _fadeOutTimer = null;
+
+    private AnimationController _animationController;
 
     // ================================================================================
     //  Unity methods
@@ -48,6 +52,7 @@ public class ActorController : MonoBehaviour {
     void Awake()
     {
         _transform = transform;
+        _animationController = GetComponent<AnimationController>();
 
         focusRight = transform.Find("focusRight").GetComponent<FocusManager>();
         focusLeft = transform.Find("focusLeft").GetComponent<FocusManager>();
@@ -60,13 +65,13 @@ public class ActorController : MonoBehaviour {
     }
 
     void Update() {
-        if (actor != null)
+        if (actor != null && actor.state != Actor.ActionState.Dead)
         {
             actor.Update();
         }
 
         // calculate enemy actions
-        if (actor.faction != Actor.Faction.Player)
+        if (actor.faction != Actor.Faction.Player && actor.state != Actor.ActionState.Dead)
         {
             GetMovementTarget();
 
@@ -83,6 +88,8 @@ public class ActorController : MonoBehaviour {
         // execute dead status
         if (actor.state == Actor.ActionState.Dead)
         {
+            _animationController.FadeOut();
+
             ShowHit(false);
             GetComponent<Collider2D>().enabled = false;
             this.enabled = false;
@@ -98,7 +105,7 @@ public class ActorController : MonoBehaviour {
         }
 
         // timer for hit visuals
-        if (_hitTimer != null)
+        if (_hitTimer != null && actor.state != Actor.ActionState.Dead)
         {
             _hitTimer.Update();
 
@@ -247,27 +254,15 @@ public class ActorController : MonoBehaviour {
             }
 
             _hitTimer = new Timer(0.2f);
-            
-            var list = displayObject.GetComponentsInChildren<Renderer>();
-            foreach (var item in list)
-            {
-                _originalColor = item.material.color;
-
-                item.material.color = new Color(1.0f, 0.4f, 0.4f);
-            }
+            _animationController.SetMaterialColor(new Color(1.0f, 0.4f, 0.4f, 1.0f));
         }
         else
         {
             if (_hitTimer != null)
             {
-                var list = displayObject.GetComponentsInChildren<Renderer>();
-                foreach (var item in list)
-                {
-                    item.material.color = _originalColor;
-                }
+                _animationController.SetMaterialColor(_originalColor);
                 _hitTimer = null;
             }
         }
     }
-
 }

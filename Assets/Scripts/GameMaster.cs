@@ -65,6 +65,10 @@ class GameMaster : MonoBehaviour
 
     public GameObject actorPrefab;
 
+    public List<Sprite> weaponPrefabs;
+    public List<Sprite> headPrefabs;
+    public List<Sprite> torsoPrefabs;
+
     // ================================================================================
     //  private methods
     // --------------------------------------------------------------------------------
@@ -202,6 +206,19 @@ class GameMaster : MonoBehaviour
         state = GameState.Tutorial;
     }
 
+    public void ShowEndScene()
+    {
+        StartCoroutine(ExecuteEndScene());
+    }
+
+    private IEnumerator ExecuteEndScene()
+    {
+        interfaceManager.sceneFader.FadeOutSuccess();
+        yield return new WaitForSeconds(1.0f);
+        Application.LoadLevel(Application.levelCount - 1);
+        state = GameState.Outro;
+    }
+
     public void StartFirstBattle()
     {
         StartBattle("test");
@@ -245,7 +262,7 @@ class GameMaster : MonoBehaviour
 
     private IEnumerator ClearBattleField()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(3.0f);
         DestroyActors();
     }
 
@@ -321,13 +338,11 @@ class GameMaster : MonoBehaviour
         battles["beginning"] = battle;
 
         battle = new Battle();
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 2; i++)
         {
             battle.enemies.Add(Actor.GetMob());
         }
         battles["progress0"] = battle;
-
-
     }
 
     private void RevivePlayer()
@@ -337,5 +352,6 @@ class GameMaster : MonoBehaviour
         player.GetComponent<ActorController>().enabled = true;
         player.GetComponent<Collider2D>().enabled = true;
         player.GetComponent<ActorController>().actor.Revive();
+        player.GetComponent<AnimationController>().Reset();
     }
 }

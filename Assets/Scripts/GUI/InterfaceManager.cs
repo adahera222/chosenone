@@ -60,6 +60,9 @@ public class InterfaceManager : MonoBehaviour {
                 break;
             case GameMaster.GameState.Loading:
                 break;
+            case GameMaster.GameState.Outro:
+                stateMachine.switchToState(new InterfaceStateOutro());
+                break;
             case GameMaster.GameState.Tutorial:
                 stateMachine.switchToState(new InterfaceStateTutorial());
                 break;
