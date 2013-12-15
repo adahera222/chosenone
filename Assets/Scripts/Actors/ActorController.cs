@@ -26,6 +26,8 @@ public class ActorController : MonoBehaviour {
 
     public Vector2 speed = new Vector2(4.0f, 3.0f);
 
+    public bool isMoving = false;
+
     // ================================================================================
     //  private
     // --------------------------------------------------------------------------------

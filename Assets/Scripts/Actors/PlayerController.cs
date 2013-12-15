@@ -54,12 +54,21 @@ public class PlayerController : MonoBehaviour {
             Vector3 movement = new Vector3(actorController.speed.x * inputX, actorController.speed.y * inputY, 0);
             movement *= Time.deltaTime;
 
+            // move camera (+ parallax)
             if (GameMaster.Instance.mode == GameMaster.GameMode.Walking
                 && movement.x > 0
                 && transform.position.x > Camera.main.transform.position.x + 0.2f)
             {
                 Camera.main.transform.GetComponent<CameraParallax>().Move(new Vector3(movement.x, 0, 0));
-                //Camera.main.transform.Translate(new Vector3(movement.x, 0, 0));
+            }
+
+            if (movement.magnitude > 0.01f)
+            {
+                actorController.isMoving = true;
+            }
+            else
+            {
+                actorController.isMoving = false;
             }
 
             transform.Translate(movement);
