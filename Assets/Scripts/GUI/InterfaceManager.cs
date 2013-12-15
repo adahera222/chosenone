@@ -108,7 +108,7 @@ public class InterfaceManager : MonoBehaviour {
 
             GUI.color = new Color(1.0f, 1.0f, 1.0f, progress);
 
-            Rect rect = new Rect(Screen.width / 2.0f - buttonWidth / 2.0f, Screen.height / 2.0f - buttonHeight / 2.0f, buttonWidth, buttonHeight);
+            Rect rect = new Rect(Screen.width / 2.0f - buttonWidth / 2.0f, Screen.height / 2.0f - buttonHeight * 2.5f, buttonWidth, buttonHeight);
             GUI.Label(rect, message);
 
             GUI.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);

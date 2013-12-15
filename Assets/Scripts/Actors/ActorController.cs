@@ -227,14 +227,24 @@ public class ActorController : MonoBehaviour {
             }
 
             _hitTimer = new Timer(0.2f);
-            _originalColor = displayObject.renderer.material.color;
-            displayObject.renderer.material.color = new Color(1.0f, 0.4f, 0.4f);
+            
+            var list = displayObject.GetComponentsInChildren<Renderer>();
+            foreach (var item in list)
+            {
+                _originalColor = item.material.color;
+
+                item.material.color = new Color(1.0f, 0.4f, 0.4f);
+            }
         }
         else
         {
             if (_hitTimer != null)
             {
-                displayObject.renderer.material.color = _originalColor;
+                var list = displayObject.GetComponentsInChildren<Renderer>();
+                foreach (var item in list)
+                {
+                    item.material.color = _originalColor;
+                }
                 _hitTimer = null;
             }
         }

@@ -288,5 +288,14 @@ TextureImporter:
         height: 170
       alignment: 9
       pivot: {x: .601898372, y: .145185396}
+    - name: shadow
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 574
+        width: 182
+        height: 136
+      alignment: 0
+      pivot: {x: .5, y: .5}
   spritePackingTag: 
   userData: 

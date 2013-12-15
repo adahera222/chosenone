@@ -333,7 +333,7 @@ class GameMaster : MonoBehaviour
     private void RevivePlayer()
     {
         GameObject player = GameObject.Find("Player");
-        player.transform.position = Camera.main.transform.position;
+        player.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - 2.0f, 0);
         player.GetComponent<ActorController>().enabled = true;
         player.GetComponent<Collider2D>().enabled = true;
         player.GetComponent<ActorController>().actor.Revive();
