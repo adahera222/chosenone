@@ -62,7 +62,8 @@ public class PlayerController : MonoBehaviour {
                 Camera.main.transform.GetComponent<CameraParallax>().Move(new Vector3(movement.x, 0, 0));
             }
 
-            if (movement.magnitude > 0.01f)
+            // mark controller as moving or not (for animations)
+            if (movement.magnitude > ActorController.MINIMUM_MOVEMENT_FOR_ANIMATIONS)
             {
                 actorController.isMoving = true;
             }

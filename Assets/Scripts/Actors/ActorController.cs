@@ -8,8 +8,10 @@ public class ActorController : MonoBehaviour {
     //  declarations
     // --------------------------------------------------------------------------------
 
+    public const float MELEE_RANGE_SQUARED = 0.2f;
+    public const float MINIMUM_MOVEMENT_FOR_ANIMATIONS = 0.01f;
+
     const float OFFSET_X = 0.7f;
-    const float MELEE_RANGE_SQUARED = 0.2f;
 
     // ================================================================================
     //  public
@@ -161,6 +163,12 @@ public class ActorController : MonoBehaviour {
     {
         Vector3 targetPosition;
 
+        // no valid target
+        if (target == null || target.actor.state == Actor.ActionState.Dead)
+        {
+            isMoving = false;
+        }
+
         if (target != null)
         {
             // move
@@ -189,6 +197,16 @@ public class ActorController : MonoBehaviour {
                     SetMoveDirection(true);
                 if (targetPosition.x < _transform.position.x)
                     SetMoveDirection(false);
+
+                // mark controller as moving or not (for animations)
+                if (movement.magnitude > ActorController.MINIMUM_MOVEMENT_FOR_ANIMATIONS)
+                {
+                    isMoving = true;
+                }
+                else
+                {
+                    isMoving = false;
+                }
             }
         }
     }
