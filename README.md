@@ -1,9 +1,9 @@
-The Chosen One
+The Last Swordketeer
 =========
 
 Ludum Dare 28
 
 This is a simple game for the Ludum Dare Compo in late 2013.
-Theme: "There can only be one. 
+Theme: You only get one
 
 Created with the 2D tools in Unity3D.

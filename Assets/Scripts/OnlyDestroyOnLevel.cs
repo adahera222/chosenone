@@ -9,14 +9,6 @@ public class OnlyDestroyOnLevel : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start() {
-
-    }
-
-    void Update() {
-
-    }
-
     void OnLevelWasLoaded(int levelIndex)
     {
         if (levelIndex == 2)
